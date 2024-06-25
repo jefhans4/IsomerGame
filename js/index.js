@@ -4,7 +4,15 @@
 
 // Provides global variables used by the entire program.
 // Most of this should be configuration.
+function vh(percent) {
+	let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	return (percent * h) / 100;
+  }
 
+function vw(percent) {
+	let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	return (percent * w) / 100;
+}
 // Score controls for the whole game
 import levels from "./levels.js";
 const bonusRate = 10;
@@ -113,7 +121,7 @@ const setUpCanvas = (canvasId) => {
 	// Set up the ChemDoodle SketcherCanvas component
 	ChemDoodle.ELEMENT["H"].jmolColor = "black";
 	ChemDoodle.ELEMENT["S"].jmolColor = "#B9A130";
-	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, 600, 400, options);
+	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, vw(50), 400, options);
 
 	sketcher.styles.atoms_displayTerminalCarbonLabels_2D = true;
 	sketcher.styles.atoms_useJMOLColors = true;
