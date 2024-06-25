@@ -110,6 +110,11 @@ const isPaused = () => state.menus.active === MENU_PAUSE;
 // canvas.js
 // ============================================================================
 // ============================================================================
+
+//The width of the canvas is set according to screen size
+let gameWidth = window.screen.width <= 1140 || window.screen.width < window.screen.height ? 90 : 60;
+console.log(gameWidth);
+
 const setUpCanvas = (canvasId) => {
 	// Initiate the canvas
 	const options = {
@@ -121,7 +126,7 @@ const setUpCanvas = (canvasId) => {
 	// Set up the ChemDoodle SketcherCanvas component
 	ChemDoodle.ELEMENT["H"].jmolColor = "black";
 	ChemDoodle.ELEMENT["S"].jmolColor = "#B9A130";
-	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, vw(50), 400, options);
+	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, vw(gameWidth), 400, options);
 
 	sketcher.styles.atoms_displayTerminalCarbonLabels_2D = true;
 	sketcher.styles.atoms_useJMOLColors = true;
@@ -705,3 +710,6 @@ window.addEventListener("keydown", (event) => {
 		isPaused() ? resumeGame() : pauseGame();
 	}
 });
+
+//Current solution to scability of canvas
+//window.onresize = function(){ location.reload(); }
