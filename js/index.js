@@ -102,7 +102,7 @@ const state = {
 ////////////////////////////
 // Global State Selectors //
 ////////////////////////////
-
+console.log(window.screen.width);
 const isInGame = () => !state.menus.active;
 const isMenuVisible = () => !!state.menus.active;
 const isPaused = () => state.menus.active === MENU_PAUSE;
@@ -113,7 +113,8 @@ const isPaused = () => state.menus.active === MENU_PAUSE;
 
 //The width of the canvas is set according to screen size
 let gameWidth = window.screen.width <= 1140 || window.screen.width < window.screen.height ? 90 : 60;
-console.log(gameWidth);
+console.log(window.screen.width)
+console.log(window.screen.height)
 
 const setUpCanvas = (canvasId) => {
 	// Initiate the canvas
@@ -711,5 +712,3 @@ window.addEventListener("keydown", (event) => {
 	}
 });
 
-//Current solution to scability of canvas
-//window.onresize = function(){ location.reload(); }
