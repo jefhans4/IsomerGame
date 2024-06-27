@@ -229,8 +229,13 @@ body {
 	flex-direction: row;
 	overflow-y:scroll;
 	flex-wrap: wrap;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
 }
-
+#menu1::-webkit-scrollbar {
+	display: none;
+  }
+  
 .menu {
 	pointer-events: none;
 	position: fixed;
@@ -488,6 +493,7 @@ menu--tutorial-main {
 		max-width: 80vw;
 	}
 	.game-interface {
+		margin: 50px 0 0 0;
 		max-width: 80vw;
 		min-height: 55vh;
 
@@ -498,6 +504,23 @@ menu--tutorial-main {
 	.game--space {
 		width: 90vw;
 	} 
+	.body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center ;
+		align-items: center;
+	}
+	.game--space {
+		width: 90vw;
+	}
+	.tutorial-description {
+		max-width: 80vw;
+	}
+	.game-interface {
+		margin: 50px 0 0 0;
+		max-width: 80vw;
+		min-height: 27vh;
+	}
 }
 
 /* @media () */
