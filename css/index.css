@@ -8,7 +8,6 @@ body {
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
-	justify-content: center ;
 	align-items: center;
 	height: 100vh;
 	font-family: monospace;
@@ -146,7 +145,7 @@ body {
 
 .hud {
 	width: 90vw;
-	margin-top: 5vh;
+	margin-top: 20px;
 	display: flex;
 	justify-content: space-between;
 }
@@ -479,13 +478,7 @@ menu--tutorial-main {
 	}
 }
 
-@media screen and (max-width: 1140px){
-	.body {
-		display: flex;
-		flex-direction: column;
-		justify-content: center ;
-		align-items: center;
-	}
+@media screen and (max-width: 1140px) and (orientation: portrait){
 	.game--space {
 		width: 90vw;
 	}
@@ -504,12 +497,6 @@ menu--tutorial-main {
 	.game--space {
 		width: 90vw;
 	} 
-	.body {
-		display: flex;
-		flex-direction: column;
-		justify-content: center ;
-		align-items: center;
-	}
 	.game--space {
 		width: 90vw;
 	}

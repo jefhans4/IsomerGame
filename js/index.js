@@ -111,7 +111,7 @@ const isPaused = () => state.menus.active === MENU_PAUSE;
 // ============================================================================
 
 //The width of the canvas is set according to screen size
-let gameWidth = window.screen.width <= 1140 || window.screen.width < window.screen.height ? 90 : 60;
+let gameWidth = window.screen.width <= 1140 && window.screen.width < window.screen.height ? 90 : 60;
 console.log(window.screen.width)
 console.log(window.screen.height)
 
