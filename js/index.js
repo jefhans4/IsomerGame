@@ -665,14 +665,20 @@ const checkMolAndLvl = async () => {
 				let correct = response["correct"];
 
 				console.log(response);
-				if (correct && notDup)
+				/***if (correct && notDup) {
 					changeScore(levels[state.game.level].molScore);
+					clearCanvas();
+				} ***/
+				///checkOneMol();
 
 				// assuming that for every 10 seconds early, add [bonusRate] points
 				const timeEarly =
 				levels[state.game.level].maxTime - state.game.time;
 
 				if (foundAll) {
+					if (correct && notDup) {
+						changeScore(levels[state.game.level].molScore);
+					}
 					// assuming that for every 10 seconds early, add [bonusRate] points
 					state.game.totalScore +=
 					state.game.lvlScore +
