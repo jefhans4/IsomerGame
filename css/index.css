@@ -8,7 +8,8 @@ body {
 	background-size: cover;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: center ;
+	align-items: center;
 	height: 100vh;
 	font-family: monospace;
 	font-weight: bold;
@@ -144,7 +145,8 @@ body {
 /////////////////////*/
 
 .hud {
-	margin-top: 10px;
+	width: 90vw;
+	margin-top: 5vh;
 	display: flex;
 	justify-content: space-between;
 }
@@ -228,6 +230,7 @@ body {
 	overflow-y:scroll;
 	flex-wrap: wrap;
 }
+
 .menu {
 	pointer-events: none;
 	position: fixed;
@@ -472,6 +475,12 @@ menu--tutorial-main {
 }
 
 @media screen and (max-width: 1140px){
+	.body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center ;
+		align-items: center;
+	}
 	.game--space {
 		width: 90vw;
 	}
@@ -479,7 +488,7 @@ menu--tutorial-main {
 		max-width: 80vw;
 	}
 	.game-interface {
-		max-width: 90vw;
+		max-width: 80vw;
 		min-height: 55vh;
 
 	}

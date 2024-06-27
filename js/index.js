@@ -102,7 +102,6 @@ const state = {
 ////////////////////////////
 // Global State Selectors //
 ////////////////////////////
-console.log(window.screen.width);
 const isInGame = () => !state.menus.active;
 const isMenuVisible = () => !!state.menus.active;
 const isPaused = () => state.menus.active === MENU_PAUSE;
