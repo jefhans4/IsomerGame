@@ -112,8 +112,6 @@ const isPaused = () => state.menus.active === MENU_PAUSE;
 
 //The width of the canvas is set according to screen size
 let gameWidth = window.screen.width <= 1140 && window.screen.width < window.screen.height ? 90 : 60;
-console.log(window.screen.width)
-console.log(window.screen.height)
 
 const setUpCanvas = (canvasId) => {
 	// Initiate the canvas
@@ -672,14 +670,16 @@ const checkMolAndLvl = async () => {
 
 				// assuming that for every 10 seconds early, add [bonusRate] points
 				const timeEarly =
-					levels[state.game.level].maxTime - state.game.time;
-				state.game.totalScore +=
+				levels[state.game.level].maxTime - state.game.time;
+
+				if (foundAll) {
+					// assuming that for every 10 seconds early, add [bonusRate] points
+					state.game.totalScore +=
 					state.game.lvlScore +
 					(timeEarly > 0
 						? parseInt(timeEarly / 10, 10) * bonusRate
 						: 0);
 
-				if (foundAll) {
 					clearInterval(intervalId);
 					clearCanvas();
 					if (state.game.level == 7) {
