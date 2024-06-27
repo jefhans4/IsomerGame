@@ -488,25 +488,14 @@ menu--tutorial-main {
 	.game-interface {
 		margin: 50px 0 0 0;
 		max-width: 80vw;
-		min-height: 55vh;
+		min-height: 50%;
 
 	}
 }
 
-@media screen and (orientation: portrait){
-	.game--space {
-		width: 90vw;
-	} 
-	.game--space {
-		width: 90vw;
-	}
-	.tutorial-description {
-		max-width: 80vw;
-	}
+@media screen and (max-width: 500px){
 	.game-interface {
-		margin: 50px 0 0 0;
-		max-width: 80vw;
-		min-height: 27vh;
+		min-height: 55vh;
 	}
 }
 
