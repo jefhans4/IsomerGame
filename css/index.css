@@ -69,11 +69,12 @@ body {
 }
 
 .game > .duplicates {
+	overflow: scroll;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-items: center;
 	max-height: 80vh;
-	overflow-y: auto;
+	overflow-y: scroll;
 	overflow-x: auto;
 	border: solid;
 	border-radius: 15px;
@@ -84,6 +85,13 @@ body {
 .duplicates::-webkit-scrollbar {
 	display: none;
   }
+
+.results {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 
 .duplicates>h2 {
 	margin: 0.8em 0.6em;
@@ -492,6 +500,7 @@ menu--tutorial-main {
 
 	}
 }
+
 
 @media screen and (max-width: 500px){
 	.game-interface {

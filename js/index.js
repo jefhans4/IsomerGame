@@ -538,6 +538,7 @@ const setViewCanvas = (viewCanvas, molBlock, transform = false) => {
 const displayCorrectAns = (molBlock, isomerName) => {
 	const molLs = $(".duplicates");
 	const isomerSet = document.createElement("div");
+	isomerSet.classList.add("results")
 	const nameHdr = document.createElement("h3");
 	nameHdr.innerText = isomerName;
 	isomerSet.appendChild(nameHdr);
