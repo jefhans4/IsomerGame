@@ -4,7 +4,15 @@
 
 // Provides global variables used by the entire program.
 // Most of this should be configuration.
+function vh(percent) {
+	let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	return (percent * h) / 100;
+  }
 
+function vw(percent) {
+	let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	return (percent * w) / 100;
+}
 // Score controls for the whole game
 import levels from "./levels.js";
 const bonusRate = 10;
@@ -94,7 +102,6 @@ const state = {
 ////////////////////////////
 // Global State Selectors //
 ////////////////////////////
-
 const isInGame = () => !state.menus.active;
 const isMenuVisible = () => !!state.menus.active;
 const isPaused = () => state.menus.active === MENU_PAUSE;
@@ -102,6 +109,10 @@ const isPaused = () => state.menus.active === MENU_PAUSE;
 // canvas.js
 // ============================================================================
 // ============================================================================
+
+//The width of the canvas is set according to screen size
+let gameWidth = window.screen.width <= 1140 && window.screen.width < window.screen.height ? 90 : 60;
+
 const setUpCanvas = (canvasId) => {
 	// Initiate the canvas
 	const options = {
@@ -113,7 +124,7 @@ const setUpCanvas = (canvasId) => {
 	// Set up the ChemDoodle SketcherCanvas component
 	ChemDoodle.ELEMENT["H"].jmolColor = "black";
 	ChemDoodle.ELEMENT["S"].jmolColor = "#B9A130";
-	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, 600, 400, options);
+	const sketcher = new ChemDoodle.SketcherCanvas(canvasId, vw(gameWidth), 400, options);
 
 	sketcher.styles.atoms_displayTerminalCarbonLabels_2D = true;
 	sketcher.styles.atoms_useJMOLColors = true;
@@ -523,10 +534,10 @@ const setViewCanvas = (viewCanvas, molBlock, transform = false) => {
 	let mol = ChemDoodle.readMOL(molBlock, transform ? 1.5 : null);
 	viewCanvas.loadMolecule(mol);
 };
-
 const displayCorrectAns = (molBlock, isomerName) => {
 	const molLs = $(".duplicates");
 	const isomerSet = document.createElement("div");
+	isomerSet.classList.add("results")
 	const nameHdr = document.createElement("h3");
 	nameHdr.innerText = isomerName;
 	isomerSet.appendChild(nameHdr);
@@ -654,19 +665,27 @@ const checkMolAndLvl = async () => {
 				let correct = response["correct"];
 
 				console.log(response);
-				if (correct && notDup)
+				/***if (correct && notDup) {
 					changeScore(levels[state.game.level].molScore);
+					clearCanvas();
+				} ***/
+				///checkOneMol();
 
 				// assuming that for every 10 seconds early, add [bonusRate] points
 				const timeEarly =
-					levels[state.game.level].maxTime - state.game.time;
-				state.game.totalScore +=
+				levels[state.game.level].maxTime - state.game.time;
+
+				if (foundAll) {
+					if (correct && notDup) {
+						changeScore(levels[state.game.level].molScore);
+					}
+					// assuming that for every 10 seconds early, add [bonusRate] points
+					state.game.totalScore +=
 					state.game.lvlScore +
 					(timeEarly > 0
 						? parseInt(timeEarly / 10, 10) * bonusRate
 						: 0);
 
-				if (foundAll) {
 					clearInterval(intervalId);
 					clearCanvas();
 					if (state.game.level == 7) {
@@ -697,3 +716,4 @@ window.addEventListener("keydown", (event) => {
 		isPaused() ? resumeGame() : pauseGame();
 	}
 });
+
