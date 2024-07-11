@@ -534,7 +534,6 @@ const setViewCanvas = (viewCanvas, molBlock, transform = false) => {
 	let mol = ChemDoodle.readMOL(molBlock, transform ? 1.5 : null);
 	viewCanvas.loadMolecule(mol);
 };
-
 const displayCorrectAns = (molBlock, isomerName) => {
 	const molLs = $(".duplicates");
 	const isomerSet = document.createElement("div");
