@@ -32,6 +32,12 @@ body {
 //        GAME        //
 //////////////////////*/
 
+.game--canvas {
+	display: flex;
+	align-items: center !important;
+	justify-items: center !important;
+}
+
 .game {
 	visibility: hidden;
 	display: flex;
