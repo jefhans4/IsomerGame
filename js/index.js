@@ -602,6 +602,7 @@ async function getData(url = "") {
 		referrerPolicy: "no-referrer",
 	});
 
+	console.log(response)
 	return response.json();
 }
 
@@ -644,7 +645,10 @@ const checkOneMol = async () => {
 			});
 		})
 		.catch((e) => {
-			console.log(e);
+			// console.log(e);
+			changeScore(-incorrectDeduct);
+			wrongDupSound.play();
+			getMolAlert(wrongIcon, INCORRECT);
 		});
 };
 
