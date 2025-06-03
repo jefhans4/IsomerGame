@@ -19,9 +19,11 @@ const bonusRate = 10;
 const dupDeduct = 5;
 const incorrectDeduct = 10;
 
+const testMode = true;
+
 // Game constants
 // const endPoint = "http://127.0.0.1:5000/";
-const endPoint = "https://chem120-game.up.railway.app/";
+const endPoint = "https://isomergameserver-production.up.railway.app";
 
 // Interaction state
 let pointerIsDown = false;
@@ -601,7 +603,8 @@ async function getData(url = "") {
 		},
 		referrerPolicy: "no-referrer",
 	});
-
+	
+	// Add a try-catch in case the server return a 505 error page
 	console.log(response)
 	return response.json();
 }
@@ -665,8 +668,8 @@ const checkMolAndLvl = async () => {
 
 			getData(endPoint + "/level_result").then((response) => {
 				let foundAll = response["foundAll"];
-				let notDup = response["notDup"];
-				let correct = response["correct"];
+				// let notDup = response["notDup"];
+				// let correct = response["correct"];
 
 				console.log(response);
 				/***if (correct && notDup) {
@@ -680,9 +683,9 @@ const checkMolAndLvl = async () => {
 				levels[state.game.level].maxTime - state.game.time;
 
 				if (foundAll) {
-					if (correct && notDup) {
-						changeScore(levels[state.game.level].molScore);
-					}
+					// if (correct && notDup) {
+					// 	changeScore(levels[state.game.level].molScore);
+					// }
 					// assuming that for every 10 seconds early, add [bonusRate] points
 					state.game.totalScore +=
 					state.game.lvlScore +
@@ -720,4 +723,21 @@ window.addEventListener("keydown", (event) => {
 		isPaused() ? resumeGame() : pauseGame();
 	}
 });
+
+/////////////
+// TESTING //
+/////////////
+if (testMode === true) {
+	window.addEventListener("keydown", (event) => {
+		if (event.key === "s") {
+			clearInterval(intervalId);
+			clearCanvas();
+			if (state.game.level == 7) {
+				endGame();
+			} else {
+				endLevel();
+			}
+		}
+	});
+}
 
