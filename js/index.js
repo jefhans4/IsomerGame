@@ -19,9 +19,11 @@ const bonusRate = 10;
 const dupDeduct = 5;
 const incorrectDeduct = 10;
 
+const testMode = true;
+
 // Game constants
 // const endPoint = "http://127.0.0.1:5000/";
-const endPoint = "https://chem120-game.up.railway.app/";
+const endPoint = "https://isomergameserver-production.up.railway.app";
 
 // Interaction state
 let pointerIsDown = false;
@@ -562,6 +564,7 @@ const displayCorrectAns = (molBlock, isomerName) => {
 };
 
 const getMolBlockStr = (canvas) => {
+	console.log("Hello dsfds d" + isStraightLine(ChemDoodle.writeMOL(canvas.getMolecule())))
 	return ChemDoodle.writeMOL(canvas.getMolecule());
 };
 
@@ -601,7 +604,9 @@ async function getData(url = "") {
 		},
 		referrerPolicy: "no-referrer",
 	});
-
+	
+	// Add a try-catch in case the server return a 505 error page
+	console.log(response)
 	return response.json();
 }
 
@@ -609,6 +614,11 @@ const checkOneMol = async () => {
 	let correct = false;
 	let notDup = false;
 	const molBlock = getMolBlockStr(sketcher);
+
+	if(isStraightLine(molBlock)) {
+		alert("NOTICE!!! Avoid drawing the isomer in a straight line. Instead, use a zigzag pattern." +
+			" While it may technically be correct, it is considered bad practice.")
+	}
 
 	await postData(endPoint + "/game_input", {
 		molBlock: molBlock,
@@ -644,7 +654,10 @@ const checkOneMol = async () => {
 			});
 		})
 		.catch((e) => {
-			console.log(e);
+			// console.log(e);
+			changeScore(-incorrectDeduct);
+			wrongDupSound.play();
+			getMolAlert(wrongIcon, INCORRECT);
 		});
 };
 
@@ -661,8 +674,8 @@ const checkMolAndLvl = async () => {
 
 			getData(endPoint + "/level_result").then((response) => {
 				let foundAll = response["foundAll"];
-				let notDup = response["notDup"];
-				let correct = response["correct"];
+				// let notDup = response["notDup"];
+				// let correct = response["correct"];
 
 				console.log(response);
 				/***if (correct && notDup) {
@@ -676,9 +689,9 @@ const checkMolAndLvl = async () => {
 				levels[state.game.level].maxTime - state.game.time;
 
 				if (foundAll) {
-					if (correct && notDup) {
-						changeScore(levels[state.game.level].molScore);
-					}
+					// if (correct && notDup) {
+					// 	changeScore(levels[state.game.level].molScore);
+					// }
 					// assuming that for every 10 seconds early, add [bonusRate] points
 					state.game.totalScore +=
 					state.game.lvlScore +
@@ -716,4 +729,62 @@ window.addEventListener("keydown", (event) => {
 		isPaused() ? resumeGame() : pauseGame();
 	}
 });
+
+//////////////////
+// USER WARNING //
+/////////////////
+function isStraightLine(molfile) {
+    let lines = molfile.trim().split("\n");
+	// console.log(lines)
+	let info = lines.slice(4, -1)
+	// console.log(info)
+
+	let infoArray = info.map(line => {
+		const numbers = line.match(/-?\d+(\.\d+)?/g);
+		return numbers ? numbers.map(Number) : [];
+	});
+
+	let atomPosition = []
+	for (let i = 0; i < infoArray.length; i += 1) {
+		if (!Number.isInteger(infoArray[i][0])) {
+			atomPosition.push(infoArray[i]);
+		}
+	}
+	// console.log(atomPosition);
+
+    if (atomPosition.length < 2) {
+        return false; 
+    }
+
+	let atomNum = atomPosition.length
+	// The structure is considered a line if (yi - y1)(x2 - x1) = (y2 - y1)(xi - x1)
+	let x1 = atomPosition[0][0];
+	let x2 = atomPosition[1][0];
+	let xi = atomPosition[atomNum - 1][0];
+	let y1 = atomPosition[0][1];
+	let y2 = atomPosition[1][1];
+	let yi = atomPosition[atomNum - 1][1];
+
+	if ((yi - y1)*(x2 - x1) === (y2 - y1)*(xi - x1)) {
+		return true
+	}
+	return false  
+}
+
+/////////////
+// TESTING //
+/////////////
+if (testMode === true) {
+	window.addEventListener("keydown", (event) => {
+		if (event.key === "s") {
+			clearInterval(intervalId);
+			clearCanvas();
+			if (state.game.level == 7) {
+				endGame();
+			} else {
+				endLevel();
+			}
+		}
+	});
+}
 
