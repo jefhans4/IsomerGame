@@ -564,6 +564,7 @@ const displayCorrectAns = (molBlock, isomerName) => {
 };
 
 const getMolBlockStr = (canvas) => {
+	console.log("Hello dsfds d" + isStraightLine(ChemDoodle.writeMOL(canvas.getMolecule())))
 	return ChemDoodle.writeMOL(canvas.getMolecule());
 };
 
@@ -613,6 +614,11 @@ const checkOneMol = async () => {
 	let correct = false;
 	let notDup = false;
 	const molBlock = getMolBlockStr(sketcher);
+
+	if(isStraightLine(molBlock)) {
+		alert("NOTICE!!! Avoid drawing the isomer in a straight line. Instead, use a zigzag pattern." +
+			" While it may technically be correct, it is considered bad practice.")
+	}
 
 	await postData(endPoint + "/game_input", {
 		molBlock: molBlock,
@@ -723,6 +729,47 @@ window.addEventListener("keydown", (event) => {
 		isPaused() ? resumeGame() : pauseGame();
 	}
 });
+
+//////////////////
+// USER WARNING //
+/////////////////
+function isStraightLine(molfile) {
+    let lines = molfile.trim().split("\n");
+	// console.log(lines)
+	let info = lines.slice(4, -1)
+	// console.log(info)
+
+	let infoArray = info.map(line => {
+		const numbers = line.match(/-?\d+(\.\d+)?/g);
+		return numbers ? numbers.map(Number) : [];
+	});
+
+	let atomPosition = []
+	for (let i = 0; i < infoArray.length; i += 1) {
+		if (!Number.isInteger(infoArray[i][0])) {
+			atomPosition.push(infoArray[i]);
+		}
+	}
+	// console.log(atomPosition);
+
+    if (atomPosition.length < 2) {
+        return false; 
+    }
+
+	let atomNum = atomPosition.length
+	// The structure is considered a line if (yi - y1)(x2 - x1) = (y2 - y1)(xi - x1)
+	let x1 = atomPosition[0][0];
+	let x2 = atomPosition[1][0];
+	let xi = atomPosition[atomNum - 1][0];
+	let y1 = atomPosition[0][1];
+	let y2 = atomPosition[1][1];
+	let yi = atomPosition[atomNum - 1][1];
+
+	if ((yi - y1)*(x2 - x1) === (y2 - y1)*(xi - x1)) {
+		return true
+	}
+	return false  
+}
 
 /////////////
 // TESTING //
