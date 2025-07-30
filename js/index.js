@@ -23,7 +23,7 @@ const testMode = true;
 
 // Game constants
 // const endPoint = "http://127.0.0.1:5000/";
-const endPoint = "https://isomergameserver-production.up.railway.app";
+const endPoint = "https://isomergameserver.onrender.com";
 
 // Interaction state
 let pointerIsDown = false;
@@ -564,7 +564,6 @@ const displayCorrectAns = (molBlock, isomerName) => {
 };
 
 const getMolBlockStr = (canvas) => {
-	console.log("Hello dsfds d" + isStraightLine(ChemDoodle.writeMOL(canvas.getMolecule())))
 	return ChemDoodle.writeMOL(canvas.getMolecule());
 };
 
@@ -786,5 +785,5 @@ if (testMode === true) {
 			}
 		}
 	});
-}
+} 
 
