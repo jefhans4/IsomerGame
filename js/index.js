@@ -19,7 +19,7 @@ const bonusRate = 10;
 const dupDeduct = 5;
 const incorrectDeduct = 10;
 
-const testMode = true;
+const testMode = false;
 
 // Game constants
 // const endPoint = "http://127.0.0.1:5000/";
