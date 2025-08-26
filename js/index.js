@@ -614,10 +614,10 @@ const checkOneMol = async () => {
 	let notDup = false;
 	const molBlock = getMolBlockStr(sketcher);
 
-	if(isStraightLine(molBlock)) {
-		alert("NOTICE!!! Avoid drawing the isomer in a straight line. Instead, use a zigzag pattern." +
-			" While it may technically be correct, it is considered bad practice.")
-	}
+	// if(isStraightLine(molBlock)) {
+	// 	alert("NOTICE!!! Avoid drawing the isomer in a straight line. Instead, use a zigzag pattern." +
+	// 		" While it may technically be correct, it is considered bad practice.")
+	// }
 
 	await postData(endPoint + "/game_input", {
 		molBlock: molBlock,
